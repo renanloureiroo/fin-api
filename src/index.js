@@ -119,4 +119,19 @@ app.get('/statement', verifyIfExistsAccountCPF, (request, response) => {
 
 })
 
+// get statement por data
+app.get('/statement/date', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request
+  const { date } = request.query
+
+  const dateFormat = new Date(date + ' 00:00')
+
+  const statement = customer.statement.filter((statement) => statement.created_at.toDateString() === dateFormat.toDateString())
+  console.log(dateFormat)
+
+  return response.json(statement)
+
+
+})
+
 app.listen(3333)
