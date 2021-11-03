@@ -1,4 +1,4 @@
-const { response } = require('express')
+const { response, request } = require('express')
 const express = require('express')
 
 const { v4: uuidV4 } = require('uuid')
@@ -66,7 +66,26 @@ app.post('/account', (request, response) => {
 
 })
 
-// create depósito
+// get account
+app.get('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request
+
+  return response.json(customer)
+})
+
+// update account
+app.put('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request
+  const { name } = request.body
+
+  customer.name = name
+
+  return response.status(201).send()
+
+
+})
+
+// create deposit
 app.post('/deposit', verifyIfExistsAccountCPF, (request, response) => {
   const { description, amount } = request.body
 
@@ -111,7 +130,7 @@ app.post('/withdraw', verifyIfExistsAccountCPF, (request, response) => {
 
 })
 
-// get extrato
+// get statement
 app.get('/statement', verifyIfExistsAccountCPF, (request, response) => {
   const { customer } = request
 
