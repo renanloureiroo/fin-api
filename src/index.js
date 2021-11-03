@@ -165,4 +165,12 @@ app.delete('/account', verifyIfExistsAccountCPF, (request, response) => {
   return response.status(200).json(customers)
 })
 
+app.get('/account/balance', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request
+
+  const balance = getBalance(customer.statement)
+
+  return response.json({ balance: balance })
+})
+
 app.listen(3333)
