@@ -153,4 +153,16 @@ app.get('/statement/date', verifyIfExistsAccountCPF, (request, response) => {
 
 })
 
+// delete account
+
+app.delete('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request
+
+  // const index = customers.indexOf(customer)
+
+  customers.splice(customer, 1)
+
+  return response.status(200).json(customers)
+})
+
 app.listen(3333)
